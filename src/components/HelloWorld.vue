@@ -8,26 +8,26 @@
 
 <script>
   export default {
-    data() {
+    data () {
       return {
         account: '',
         password: ''
       }
     },
-    methods:{
-      login() {
+    methods: {
+      login () {
         // 获取已有账号密码
         this.$http.get('/server/users')
           .then((response) => {
             // 响应成功回调
-            console.log(response.body);
+            console.log(response.body)
           })
           .then((response) => {
             console.log(response)
           })
           .catch((reject) => {
             console.log(reject)
-          });
+          })
       }
     }
   }
