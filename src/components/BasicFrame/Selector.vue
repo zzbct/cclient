@@ -21,9 +21,11 @@
   .selector {
     display: flex;
     justify-content: space-between;
+    height: 30px;
+    z-index: 100;
   }
   .imitate-title {
-    margin: 0 10px;
+    margin-right: 10px;
     height: 30px;
     line-height: 30px;
   }
@@ -122,13 +124,13 @@
     components: {
     },
     methods: {
-      lockTarget(opt) {
-        this.target = opt;
-        this.show = !this.show;
+      lockTarget (opt) {
+        this.target = opt
+        this.show = !this.show
+        this.$emit('select', this.target)
       },
-
-      control() {
-        this.show = !this.show;
+      control () {
+        this.show = !this.show
       }
     }
   }
