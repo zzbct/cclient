@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import DbTest from '@/components/DbTest'
 import main from '@/components/main'
 import data from '@/components/data'
+import manage from '@/components/manage'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/data',
       name: 'data',
       component: data
+    },
+    {
+      path: '/manage',
+      name: 'manage',
+      component: manage
     }
   ]
 })

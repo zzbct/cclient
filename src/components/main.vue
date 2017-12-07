@@ -3,9 +3,8 @@
     <!--导航-->
     <hNav target="mp"></hNav>
     <!--图视-->
-    <div >
-      <img src="../assets/logo.jpg">
-      Time is preceful!
+    <div class="art">
+
     </div>
     <div>
       目标总数79 证据项200
@@ -22,7 +21,17 @@
   </div>
 </template>
 <style scoped>
-
+  .art {
+    margin-top: 20px;
+  }
+  .red {
+    height: 90px;
+    background-color: red;
+  }
+  .yellow {
+    height: 20px;
+    background-color: yellow;
+  }
 </style>
 <script>
   import hNav from '@/components/BasicFrame/hNav'
