@@ -1,7 +1,7 @@
 <template>
   <div class="hnav-view">
     <div :class="target === 'mp'? 'locked' : 'active'">
-      <router-link to="/">主页面</router-link>
+      <router-link to="/main">主页面</router-link>
     </div>
     <div :class="target === 'dr'? 'locked' : 'active'">
       <router-link to="/data">数据准备</router-link>

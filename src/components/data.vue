@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--导航-->
-    <hNav target="dr"></hNav>
+    <HNav target="dr"></HNav>
     <!--筛选区-->
     <div class="data-filter">
       <Selector title="审定阶段" :options="opSet0" @select="updateStage"></Selector>
@@ -99,7 +99,7 @@
   }
 </style>
 <script>
-  import hNav from '@/components/BasicFrame/hNav'
+  import HNav from '@/components/BasicFrame/HNav'
   import Selector from '@/components/BasicFrame/Selector'
   export default{
     data () {
@@ -114,7 +114,7 @@
       }
     },
     components: {
-      hNav,
+      HNav,
       Selector
     },
     computers () {

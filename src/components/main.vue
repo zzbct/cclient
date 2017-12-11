@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--导航-->
-    <hNav target="mp"></hNav>
+    <HNav target="mp"></HNav>
     <!--图视-->
     <div class="art">
 
@@ -34,14 +34,14 @@
   }
 </style>
 <script>
-  import hNav from '@/components/BasicFrame/hNav'
+  import HNav from '@/components/BasicFrame/HNav'
   export default{
     data () {
       return {
       }
     },
     components: {
-      hNav
+      HNav
     },
     methods: {
     }
