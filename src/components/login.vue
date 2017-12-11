@@ -112,14 +112,14 @@
         })
           .then((response) => {
             // 响应成功回调
-            var info =response.body;
-            if(info.Msg != 'Success!') {
+            var info = response.body
+            if (info.Msg !== 'Success!') {
               alert('信息有误，请重新输入')
               return
             }
-            localStorage.setItem('ID',info.UserID);
-            localStorage.setItem('Auth',info.Auth);
-            this.$router.push({path:'/main'})
+            localStorage.setItem('ID', info.UserID)
+            localStorage.setItem('Auth', info.Auth)
+            this.$router.push({ path: '/main' })
           })
           .catch((reject) => {
             console.log(reject)

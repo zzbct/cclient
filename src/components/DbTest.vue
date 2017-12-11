@@ -118,7 +118,7 @@
       },
       getSubGoals () {
         // 从compliance tool database获取目标
-        this.$http.get('/server/users/subgoals', {
+        this.$http.get('/server/users/subgoals/parent', {
           params: {
             parent: this.queryP
           }
