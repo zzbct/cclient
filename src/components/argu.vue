@@ -2,20 +2,19 @@
 <template>
   <div>
     <HNav target="gm">目标管理</HNav>
-    <div class="title">>目标论证页<</div>
+    <div class="title">>
+      目标论证页--{{ goal.CheckItem }}
+      <button>执行论证</button>
+    </div>
     <div class="argu">
       <div class="argu-info">
         <!--目标相关信息-->
-        <div>
-          <div class="info-block">
-            <div class="block-head">顶级论证目标</div>
-            <div class="block-body">{{ goal.CheckItem }}</div>
-          </div>
-          <div class="info-block">
+        <div class="info-tag">
+          <div class="tag-block">
             <div class="block-head">目标审定结果阈值</div>
             <div class="block-body">{{ goal.threshold }}</div>
           </div>
-          <div class="info-block">
+          <div class="tag-block">
             <div class="block-head">论证模式</div>
             <div class="block-body">
               <div>
@@ -23,35 +22,37 @@
               </div>
             </div>
           </div>
+          <div class="tag-block">
+            <div class="block-head">目标审定结果</div>
+            <div class="block-body">0.8</div>
+          </div>
         </div>
         <!--证据相关信息-->
-        <div>
+        <div class="evi">
           <div class="evi-head">
             <div class="evi-discribe">证据描述</div>
             <div class="evi-confidence">证据置信度</div>
             <div class="evi-parent">直接论证目标项</div>
           </div>
-          <div class="evi-body">
-            <div v-for="item in evidences">
+          <div class="evi-body scroll">
+            <div class="evi-item" v-for="item in evis">
               <div class="evi-discribe">
-                <p>位置：{{ item.name }}-{{ item.chapter }}节</p>
-                <p>页码：{{ item.startPage }}-{{ item.endPage }}</p>
+                <p>类型：{{ item.eviBody.type }}</p>
+                <p>位置：{{ item.eviBody.name }}-{{item.eviBody.chapter }}节</p>
+                <p>页码：{{ item.eviBody.startPage }}-{{ item.eviBody.endPage }}</p>
+                <p v-if="item.eviBody.details">细节说明：{{ item.eviBody.details }}</p>
                 <p>证据来源：工具/文档</p>
                 <p>证据收集者对该活动的熟知程度：精通</p>
                 <p>证据收集者对该证据支持能力的评估：较强</p>
               </div>
               <div class="evi-confidence">
-                <span>满足0.8</span>
-                <span>不满足0.1</span>
-                <span>不确定0.1</span>
+                <p><span class="evi-confidence-1">满足0.8</span></p>
+                <p><span class="evi-confidence-2">不满足0.1</span></p>
+                <p><span class="evi-confidence-3">不确定0.1</span></p>
               </div>
-              <div class="evi-parent">{{ item.checkItem }}</div>
+              <div class="evi-parent evi-parent1">{{ item.eviItem }}</div>
             </div>
           </div>
-        </div>
-        <div>
-          <button>执行论证</button>
-          <button>查看论证详细</button>
         </div>
       </div>
       <div class="argu-goal scroll">
@@ -65,9 +66,23 @@
 </template>
 <style scoped>
   .title {
-    padding: 30px 20px;
+    height: 60px;
+    line-height: 60px;
     text-align: left;
-    font-size: 24px;
+    font-size: 20px;
+  }
+  .title>button {
+    width: 80px;
+    height: 30px;
+    border-radius: 7px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #358fcb;
+    color: #fff;
+  }
+  .title>button:hover {
+    background-color: #ef8614;
   }
   .argu {
     display: flex;
@@ -76,7 +91,7 @@
   }
   .argu-info {
     margin-left: 60px;
-    width: 55%;
+    width: 58%;
   }
   .argu-goal {
     max-width: 500px;
@@ -96,8 +111,13 @@
   .argu-goal-body {
     padding: 0 20px;
   }
-  .info-block {
+  .info-tag {
+    display: flex;
+    justify-content: space-between;
     margin: 0 auto 20px auto;
+  }
+  .tag-block {
+    width: 26%;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 3px 0 1px #358fcb inset;
@@ -105,7 +125,7 @@
   }
   .block-head {
     position: relative;
-    width: 30%;
+    width: 60%;
     height: 20px;
     font-weight: bold;
   }
@@ -121,20 +141,59 @@
   .block-body {
     margin-top: 20px;
   }
+  .evi {
+    background-color: #fff;
+  }
   .evi-head {
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
+    padding: 20px;
     text-align: left;
+    box-shadow: 0 3px 1px #888;
+  }
+  .evi-body {
+    max-height: 700px;
+    overflow: auto;
+  }
+  .evi-item {
+    display: flex;
+    justify-content: space-between;
+    min-height: 180px;
+    max-height: 210px;
+    padding: 0 20px;
+    font-size: 12px;
+  }
+  .evi-item:nth-of-type(even) {
+    background-color: lightgray;
   }
   .evi-discribe {
-    width: 60%;
+    width: 40%;
   }
   .evi-confidence {
-    width: 28%;
+    width: 16%;
+  }
+  .evi-confidence span {
+    display: inline-block;
+    width: 50%;
+    height: 28px;
+    line-height: 28px;
+    font-weight: 600;
+  }
+  .evi-confidence-1 {
+   color: green;
+  }
+  .evi-confidence-2 {
+    color: #358fcb;
+  }
+  .evi-confidence-3 {
+    color: dimgray;
   }
   .evi-parent {
-    width: 12%;
+    width: 44%;
+  }
+  .evi-parent1 {
+    line-height: 180px;
   }
 </style>
 <script>
@@ -144,7 +203,8 @@
       return {
         evidences: null,
         subs: null,
-        goal: null
+        goal: null,
+        evis: null
       }
     },
     components: {
@@ -152,15 +212,15 @@
     },
     created () {
       var cId = this.$route.query.cId
-      // var id = localStorage.getItem('ID')
-      // var auth = localStorage.getItem('Auth')
+      var id = localStorage.getItem('ID')
+      var auth = localStorage.getItem('Auth')
       this.goalInfo(cId)
-      // this.arguInfo(cId, id, auth)
+      this.eviInfo(cId, id, auth)
       this.subsInfo(cId)
     },
     methods: {
-      arguInfo (cId, id, auth) {
-        this.$http.get('/server/users/arguInfo', {
+      eviInfo (cId, id, auth) {
+        this.$http.get('/server/users/argu/evis', {
           params: {
             cId: cId,
             id: id,
@@ -169,8 +229,22 @@
         })
           .then((response) => {
             // 响应成功回调
-            console.log(response)
-            this.goals = response.data
+            var body = response.body.ItemForm
+            var tmp = []
+            var result = []
+            if(body && body.length) {
+              tmp = body[0].eviForm
+              tmp.forEach(function (item) {
+                var obj = {
+                  eviID: item.eviID,
+                  eviItem: item.eviItem,
+                  eviBody: item.evilist && item.evilist.length ? item.evilist[0] : []
+                }
+                result.push(obj)
+              })
+            }
+            console.log(result)
+            this.evis = result
           })
           .catch((reject) => {
             console.log(reject)
