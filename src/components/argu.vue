@@ -41,14 +41,14 @@
                 <p>位置：{{ item.eviBody.name }}-{{item.eviBody.chapter }}节</p>
                 <p>页码：{{ item.eviBody.startPage }}-{{ item.eviBody.endPage }}</p>
                 <p v-if="item.eviBody.details">细节说明：{{ item.eviBody.details }}</p>
-                <p>证据来源：工具/文档</p>
-                <p>证据收集者对该活动的熟知程度：精通</p>
-                <p>证据收集者对该证据支持能力的评估：较强</p>
+                <p>证据来源：{{ item.eviBody.eviSource }}</p>
+                <p>证据收集者对该活动的熟知程度：{{ item.eviBody.eviFamiliarity }}</p>
+                <p>证据收集者对该证据支持能力的评估：{{ item.eviBody.eviSuppAccess }}</p>
               </div>
               <div class="evi-confidence">
-                <p><span class="evi-confidence-1">满足0.8</span></p>
-                <p><span class="evi-confidence-2">不满足0.1</span></p>
-                <p><span class="evi-confidence-3">不确定0.1</span></p>
+                <p><span class="evi-confidence-1">满足{{ item.eviBody.pass }}</span></p>
+                <p><span class="evi-confidence-2">不满足{{ item.eviBody.fail }}</span></p>
+                <p><span class="evi-confidence-3">不确定{{ item.eviBody.uncertain }}</span></p>
               </div>
               <div class="evi-parent evi-parent1">{{ item.eviItem }}</div>
             </div>
@@ -58,7 +58,7 @@
       <div class="argu-goal scroll">
         <div class="argu-goal-head">子目标集</div>
         <div class="argu-goal-body">
-          <p v-for="(sub, index) in subs">{{index}}-{{sub.EviItem}}</p>
+          <p v-for="(sub, index) in subs">{{index+1}}-{{sub.EviItem}}</p>
         </div>
       </div>
     </div>
@@ -94,7 +94,7 @@
     width: 58%;
   }
   .argu-goal {
-    max-width: 500px;
+   width: 400px;
     max-height: 700px;
     overflow: scroll;
     background-color: #fff;
@@ -232,13 +232,13 @@
             var body = response.body.ItemForm
             var tmp = []
             var result = []
-            if(body && body.length) {
-              tmp = body[0].eviForm
+            if (body.eviForm) {
+              tmp = body.eviForm
               tmp.forEach(function (item) {
                 var obj = {
                   eviID: item.eviID,
                   eviItem: item.eviItem,
-                  eviBody: item.evilist && item.evilist.length ? item.evilist[0] : []
+                  eviBody: item.evilist
                 }
                 result.push(obj)
               })

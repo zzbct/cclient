@@ -108,7 +108,7 @@
         // 从compliance tool database获取目标
         this.$http.post('/server', {
           user: this.user,
-          passward: this.password
+          password: this.password
         })
           .then((response) => {
             // 响应成功回调
