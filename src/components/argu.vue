@@ -4,7 +4,7 @@
     <HNav target="gm">目标管理</HNav>
     <div class="title">>
       目标论证页--{{ goal.CheckItem }}
-      <button>执行论证</button>
+      <button @click="argu">执行论证</button>
     </div>
     <div class="argu">
       <div class="argu-info">
@@ -18,13 +18,13 @@
             <div class="block-head">论证模式</div>
             <div class="block-body">
               <div>
-                <span>(1|2)&3&4</span>
+                <span>{{ mode }}</span>
               </div>
             </div>
           </div>
           <div class="tag-block">
             <div class="block-head">目标审定结果</div>
-            <div class="block-body">0.8</div>
+            <div class="block-body">{{ result }}</div>
           </div>
         </div>
         <!--证据相关信息-->
@@ -58,7 +58,7 @@
       <div class="argu-goal scroll">
         <div class="argu-goal-head">子目标集</div>
         <div class="argu-goal-body">
-          <p v-for="(sub, index) in subs">{{index+1}}-{{sub.EviItem}}</p>
+          <p v-for="(sub, index) in subs">{{sub.dict}}-{{sub.EviItem}}</p>
         </div>
       </div>
     </div>
@@ -203,8 +203,13 @@
       return {
         evidences: null,
         subs: null,
-        goal: null,
-        evis: null
+        goal: {
+          CheckItem: null,
+          threshold: null
+        },
+        evis: null,
+        mode: null,
+        result: null
       }
     },
     components: {
@@ -243,8 +248,16 @@
                 result.push(obj)
               })
             }
-            console.log(result)
             this.evis = result
+            if (this.mode === 'null') {
+              let m = ''
+              let len = result.length
+              for (let i = 1; i < len; i++) {
+                m += i + '&'
+              }
+              m += len
+              this.mode = m
+            }
           })
           .catch((reject) => {
             console.log(reject)
@@ -259,6 +272,8 @@
           .then((response) => {
             // 响应成功回调
             this.goal = response.data
+            this.mode = this.goal.mode
+            this.result = this.goal.result
           })
           .catch((reject) => {
             console.log(reject)
@@ -273,6 +288,38 @@
           .then((response) => {
             // 响应成功回调
             this.subs = response.data
+          })
+          .catch((reject) => {
+            console.log(reject)
+          })
+      },
+      argu () {
+        var tmp = []
+        this.evis.forEach((item) => {
+          let dict
+          for (var i = 0; i < this.subs.length; i++) {
+            let unit = this.subs[i]
+            if (unit.eviID === item.eviID) {
+              dict = i + 1
+              break
+            }
+          }
+          let obj = {
+            dict: dict,
+            pass: item.eviBody.pass,
+            uncertain: item.eviBody.uncertain,
+            fail: item.eviBody.fail
+          }
+          tmp.push(obj)
+        })
+        var param = {
+          mode: this.mode,
+          refItem: this.$route.query.cId,
+          confidenceInfo: tmp
+        }
+        this.$http.post('/server/users/argu/results', param)
+          .then((response) => {
+            // 响应成功回调
           })
           .catch((reject) => {
             console.log(reject)
