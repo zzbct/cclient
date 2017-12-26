@@ -30,7 +30,9 @@
             <span class="opt1">
               <router-link :to="{path: '/argu', query: {cId: item.ID}}">进入论证</router-link>
             </span>
-            <span class="opt2" v-if="item.result!=='无'">查看论证信息反馈</span>
+            <span class="opt2" v-if="item.result!=='无'">
+              <router-link :to="{path: '/cost', query: {cId: item.ID}}">进入证据收集分析</router-link>
+            </span>
           </div>
         </div>
       </div>

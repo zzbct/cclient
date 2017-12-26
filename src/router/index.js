@@ -6,6 +6,7 @@ import main from '@/components/main'
 import data from '@/components/data'
 import manage from '@/components/manage'
 import argu from '@/components/argu'
+import cost from '@/components/cost'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/argu',
       name: 'argu',
       component: argu
+    },
+    {
+      path: '/cost',
+      name: 'cost',
+      component: cost
     }
   ]
 })
