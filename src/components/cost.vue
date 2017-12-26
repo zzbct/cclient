@@ -4,7 +4,7 @@
     <HNav target="gm">目标管理</HNav>
     <div class="title">>
       证据收集分析页--{{ static.heckItem }}
-      <button @click="cost">执行分析</button>
+      <button @click="analyse">执行分析</button>
     </div>
     <div class="argu">
       <div class="argu-goal scroll">
@@ -207,29 +207,31 @@
           threshold: null,
           result: null,
           total: null
-        }
+        },
+        cId: null,
+        id: null,
+        auth: null
       }
     },
     components: {
       HNav
     },
     created () {
-      var cId = this.$route.query.cId
-      var id = localStorage.getItem('ID')
-      var auth = localStorage.getItem('Auth')
-      this.staticInfo(cId, id, auth)
+      this.cId = this.$route.query.cId
+      this.id = localStorage.getItem('ID')
+      this.auth = localStorage.getItem('Auth')
+      this.staticInfo()
     },
     methods: {
-      staticInfo (cId, id, auth) {
+      staticInfo () {
         this.$http.get('/server/users/cost/static', {
           params: {
-            cId: cId,
-            id: id,
-            auth: auth
+            cId: this.cId,
+            id: this.id,
+            auth: this.auth
           }
         })
           .then((response) => {
-            // 响应成功回调
             // 响应成功回调
             this.static = response.data
           })
@@ -237,7 +239,22 @@
             console.log(reject)
           })
       },
-      cost () {}
+      analyse (cId, id, auth) {
+        this.$http.get('/server/users/cost/analyse', {
+          params: {
+            cId: this.cId,
+            id: this.id,
+            auth: this.auth
+          }
+        })
+          .then((response) => {
+            // 响应成功回调
+            //this.static = response.data
+          })
+          .catch((reject) => {
+            console.log(reject)
+          })
+      }
     }
   }
 </script>
