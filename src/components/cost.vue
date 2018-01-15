@@ -5,6 +5,7 @@
     <div class="title">>
       证据收集分析页--{{ static.heckItem }}
       <button @click="analyse">执行分析</button>
+      <button v-if="advice.length" @click="reviewer">回审数据</button>
     </div>
     <div class="argu">
       <div class="argu-goal scroll">
@@ -16,8 +17,8 @@
         </div>
         <div class="argu-goal-head">结果</div>
         <div class="argu-goal-body">
-          <p>待提升证据数： 3/12</p>
-          <p>总提升成本：120</p>
+          <p>待提升证据数： {{ advice.length }} / {{static.total}}</p>
+          <p>总提升成本：{{ cost }}</p>
         </div>
       </div>
       <div class="argu-info">
@@ -27,35 +28,35 @@
             <div class="evi-discribe">证据描述</div>
             <div class="evi-confidence">证据置信度当前值</div>
             <div class="evi-confidence">证据置信度期望值</div>
-            <div class="evi-math">证据收集成本公式</div>
+            <div class="evi-math">受支持目标项</div>
             <div class="evi-cost">提升成本</div>
           </div>
-          <div class="evi-body scroll">
+          <div class="evi-body scroll" v-for="item in advice">
             <div class="evi-item">
               <div class="evi-discribe">
-                <p>类型：</p>
-                <p>位置：1-2节</p>
-                <p>页码：1-2</p>
-                <p>细节说明：</p>
-                <p>证据来源：</p>
-                <p>证据收集者对该活动的熟知程度：</p>
-                <p>证据收集者对该证据支持能力的评估：</p>
+                <p>类型：{{ item.info.type }}</p>
+                <p>位置：{{ item.info.chapter }}节</p>
+                <p>页码：{{ item.info.startPage }}-{{ item.info.endPage }}</p>
+                <p>细节说明：{{ item.info.details }}</p>
+                <p>证据来源：{{ item.info.eviSource  }} </p>
+                <p>证据收集者对该活动的熟知程度：{{ item.info.eviFamiliarity }}</p>
+                <p>证据收集者对该证据支持能力的评估：{{ item.info.eviSuppAccess }}</p>
               </div>
               <div class="evi-confidence">
-                <p><span class="evi-confidence-1">满足0.8</span></p>
-                <p><span class="evi-confidence-2">不满足0.1</span></p>
-                <p><span class="evi-confidence-3">不确定0.1</span></p>
+                <p><span class="evi-confidence-1">满足{{ item.initial[0] }}</span></p>
+                <p><span class="evi-confidence-2">不满足{{ item.initial[1] }}</span></p>
+                <p><span class="evi-confidence-3">不确定{{ item.initial[2] }}</span></p>
               </div>
               <div class="evi-confidence">
-                <p><span class="evi-confidence-1">满足0.87</span></p>
-                <p><span class="evi-confidence-2">不满足0.1</span></p>
-                <p><span class="evi-confidence-3">不确定0.03</span></p>
+                <p><span class="evi-confidence-1">满足{{ item.conf[0] }}</span></p>
+                <p><span class="evi-confidence-2">不满足{{ item.conf[1] }}</span></p>
+                <p><span class="evi-confidence-3">不确定{{ item.conf[2] }}</span></p>
               </div>
               <div class="evi-math">
-                <p>成本公式</p>
+                <p>{{ item.name }}</p>
               </div>
               <div class="evi-cost">
-                <p>24</p>
+                <p>{{ item.cost }}</p>
               </div>
             </div>
           </div>
@@ -210,7 +211,9 @@
         },
         cId: null,
         id: null,
-        auth: null
+        auth: null,
+        advice: [],
+        cost: null
       }
     },
     components: {
@@ -249,7 +252,12 @@
         })
           .then((response) => {
             // 响应成功回调
-            //this.static = response.data
+            // this.static = response.data
+            let data = response.data
+            if (data.code === 200) {
+              this.cost = data.cost
+              this.advice = data.dataTree.res
+            }
           })
           .catch((reject) => {
             console.log(reject)
