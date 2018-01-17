@@ -63,6 +63,12 @@
         </div>
       </div>
     </div>
+    <!--弹窗-->
+    <div class="window" id="wd" v-if="show">
+      <div class="box" id="bx">
+        <Matrix :first="first" :matrixB="matrixB" :matrixS="matrixS" ></Matrix>
+      </div>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -196,9 +202,22 @@
   .evi-cost {
     width: 15%;
   }
+  .window {
+    position: fixed;
+    top: 80px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+  }
+  .box {
+    width: 80%;
+    margin: 50px auto 0;
+    background-color: white;
+  }
 </style>
 <script>
   import HNav from '@/components/BasicFrame/HNav'
+  import Matrix from '@/components/BasicFrame/Matrix/matrix'
 
   export default{
     data () {
@@ -212,18 +231,26 @@
         cId: null,
         id: null,
         auth: null,
+        first: [],
         advice: [],
-        cost: null
+        matrixB: [],
+        matrixS: [],
+        cost: null,
+        show: false
       }
     },
     components: {
-      HNav
+      HNav,
+      Matrix
     },
     created () {
       this.cId = this.$route.query.cId
       this.id = localStorage.getItem('ID')
       this.auth = localStorage.getItem('Auth')
       this.staticInfo()
+    },
+    mounted () {
+      this.close()
     },
     methods: {
       staticInfo () {
@@ -256,12 +283,30 @@
             let data = response.data
             if (data.code === 200) {
               this.cost = data.cost
+              this.first = data.dataTree.first.evi
               this.advice = data.dataTree.res
+              this.matrixB = data.dataTree.matrixB
+              this.matrixS = data.dataTree.matrixS
             }
           })
           .catch((reject) => {
             console.log(reject)
           })
+      },
+      reviewer () {
+        this.show = !this.show
+      },
+      close () {
+        let $this = this
+        let parent = document.body
+        parent.addEventListener('click', function (e) {
+          e = e || window.event
+          let target = e.target || e.srcElement
+          if (target.className === 'window' && $this.show) {
+            $this.show = false
+          }
+          e.stopPropagation()
+        }, false)
       }
     }
   }

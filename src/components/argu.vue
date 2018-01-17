@@ -94,7 +94,7 @@
     width: 58%;
   }
   .argu-goal {
-   width: 400px;
+    width: 400px;
     max-height: 700px;
     overflow: scroll;
     background-color: #fff;
