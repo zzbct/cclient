@@ -237,7 +237,7 @@
             var body = response.body.ItemForm
             var tmp = []
             var result = []
-            if (body.eviForm) {
+            if (body.eviForm && body.eviForm.length) {
               tmp = body.eviForm
               tmp.forEach(function (item) {
                 var obj = {
@@ -247,6 +247,10 @@
                 }
                 result.push(obj)
               })
+            } else {
+              if (confirm('请先为该目标提供支撑证据！')) {
+                this.$router.push({ path: '/manage' })
+              }
             }
             this.evis = result
             if (this.mode === 'null') {
