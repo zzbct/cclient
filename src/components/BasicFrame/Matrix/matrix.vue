@@ -2,13 +2,13 @@
 <template>
   <div class="view">
     <div class="unit">
-      <div class="title">提升建议</div>
+      <div class="title"><span class="circle c1">1</span>提升建议</div>
       <div class="piece">
         <span v-for="item in first">目标{{ item.name }} : {{ item.virtual }}->{{ item.conf }}</span>
       </div>
     </div>
     <div class="unit">
-      <div class="title">基本矩阵</div>
+      <div class="title"><span class="circle c2">2</span>基本矩阵</div>
       <div class="tag-p scroll" >
         <div class="tag-c" v-for="item in matrixB">
           <TableTag :matrixData="item" type="base"></TableTag>
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="unit">
-      <div class="title">拓展矩阵</div>
+      <div class="title"><span class="circle c3">3</span>拓展矩阵</div>
       <div  class="tag-p scroll" >
         <div class="tag-c" v-for="item in matrixS">
           <TableTag :matrixData="item" type="sadd"></TableTag>
@@ -32,6 +32,20 @@
   .unit {
     padding: 10px 0;
     border-bottom: 1px solid #f7c106;
+  }
+  .circle {
+    margin-right: 5px;
+    padding: 2px 6px;
+    border-radius: 10px;
+  }
+  .c1 {
+    background-color: olivedrab;
+  }
+  .c2 {
+    background-color: palevioletred;
+  }
+  .c3 {
+    background-color: #f7c106;
   }
   .title {
     height: 30px;

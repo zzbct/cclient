@@ -1,8 +1,8 @@
 <template>
   <div class="hnav-view">
-    <div :class="target === 'mp'? 'locked' : 'active'">
+  <!--<div :class="target === 'mp'? 'locked' : 'active'">
       <router-link to="/main">主页面</router-link>
-    </div>
+    </div>-->
     <div :class="target === 'dr'? 'locked' : 'active'">
       <router-link to="/data">数据准备</router-link>
     </div>

@@ -31,8 +31,8 @@
             <div class="evi-math">受支持目标项</div>
             <div class="evi-cost">提升成本</div>
           </div>
-          <div class="evi-body scroll" v-for="item in advice">
-            <div class="evi-item">
+          <div class="evi-body scroll">
+            <div class="evi-item" v-for="item in advice">
               <div class="evi-discribe">
                 <p>类型：{{ item.info.type }}</p>
                 <p>位置：{{ item.info.chapter }}节</p>

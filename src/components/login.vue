@@ -6,7 +6,7 @@
       <div class="login-content">
         <span class="arrow"></span>
         <div class="info"><input v-model="user" placeholder="用户名"></div>
-        <div class="info"><input v-model="password" placeholder="密码"></div>
+        <div class="info"><input v-model="password" type="password" placeholder="密码"></div>
         <div class="basic"><button @click="login">登录</button></div>
       </div>
     </div>
@@ -119,7 +119,7 @@
             }
             localStorage.setItem('ID', info.UserID)
             localStorage.setItem('Auth', info.Auth)
-            this.$router.push({ path: '/main' })
+            this.$router.push({ path: '/data' })
           })
           .catch((reject) => {
             console.log(reject)
