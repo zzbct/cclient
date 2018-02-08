@@ -36,8 +36,8 @@
     width: 100%;
     margin-bottom: 6px;
     color: #acacb0;
-    background-color: #444350;
-    border-color: #444350;
+    background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 4px;
   }
   .btn {
@@ -46,9 +46,9 @@
     text-align: center;
     white-space: nowrap;
     user-select: none;
-    border: 1px solid transparent;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
+    outline: none;
   }
 
   .hiden {
@@ -56,9 +56,9 @@
   }
 
   .select-view:hover {
-    color: #0083e3;
-    background-color: #5c5a6c;
-    border-color: #5c5a6c;
+    color: #409eff;
+    //background-color: #5c5a6c;
+    //border-color: #5c5a6c;
   }
 
   .imitate-shape {

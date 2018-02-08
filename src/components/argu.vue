@@ -1,7 +1,7 @@
 <!--目标管理子页--目标论证页-->
 <template>
   <div>
-    <HNav target="gm">目标管理</HNav>
+    <ENav target="gm">目标管理</ENav>
     <div class="title">>
       目标论证页--{{ goal.CheckItem }}
       <button @click="argu">执行论证</button>
@@ -197,7 +197,9 @@
   }
 </style>
 <script>
-  import HNav from '@/components/BasicFrame/HNav'
+  import ENav from '@/components/BasicFrame/ENav'
+  import { Message } from 'element-ui'
+
   export default{
     data () {
       return {
@@ -213,7 +215,7 @@
       }
     },
     components: {
-      HNav
+      ENav
     },
     created () {
       var cId = this.$route.query.cId
@@ -324,6 +326,10 @@
         this.$http.post('/server/users/argu/results', param)
           .then((response) => {
             // 响应成功回调
+            Message.success({
+              message: '完成论证',
+              duration: 1000
+            })
           })
           .catch((reject) => {
             console.log(reject)

@@ -1,7 +1,7 @@
 <!--证据收集成本分析-->
 <template>
   <div>
-    <HNav target="gm">目标管理</HNav>
+    <ENav target="gm">目标管理</ENav>
     <div class="title">>
       证据收集分析页--{{ static.heckItem }}
       <button @click="analyse">执行分析</button>
@@ -216,7 +216,7 @@
   }
 </style>
 <script>
-  import HNav from '@/components/BasicFrame/HNav'
+  import ENav from '@/components/BasicFrame/ENav'
   import Matrix from '@/components/BasicFrame/Matrix/matrix'
 
   export default{
@@ -240,7 +240,7 @@
       }
     },
     components: {
-      HNav,
+      ENav,
       Matrix
     },
     created () {

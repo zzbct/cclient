@@ -6,11 +6,10 @@
       <div class="login-content">
         <span class="arrow"></span>
         <div class="info"><input v-model="user" placeholder="用户名"></div>
-        <div class="info"><input v-model="password" type="password" placeholder="密码"></div>
+        <div class="info"><input  @keyup.enter="login" v-model="password" type="password" placeholder="密码"></div>
         <div class="basic"><button @click="login">登录</button></div>
       </div>
     </div>
-
   </div>
 </template>
 <style scoped>

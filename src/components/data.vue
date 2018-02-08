@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--导航-->
-    <HNav target="dr"></HNav>
+    <ENav></ENav>
     <!--筛选区-->
     <div class="data-filter">
       <Selector title="审定阶段" :options="opSet0" @select="updateStage"></Selector>
@@ -31,7 +31,6 @@
               <input readonly v-model="item.threshold" >
               <span @click="edit(index)">编辑</span>
             </template>
-
           </div>
         </div>
       </div>
@@ -99,8 +98,9 @@
   }
 </style>
 <script>
-  import HNav from '@/components/BasicFrame/HNav'
+  import ENav from '@/components/BasicFrame/ENav'
   import Selector from '@/components/BasicFrame/Selector'
+
   export default{
     data () {
       return {
@@ -114,7 +114,7 @@
       }
     },
     components: {
-      HNav,
+      ENav,
       Selector
     },
     computers () {
