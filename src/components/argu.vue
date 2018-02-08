@@ -1,7 +1,7 @@
 <!--目标管理子页--目标论证页-->
 <template>
   <div>
-    <ENav target="gm">目标管理</ENav>
+    <ENav>目标管理</ENav>
     <div class="title">>
       目标论证页--{{ goal.CheckItem }}
       <button @click="argu">执行论证</button>
@@ -74,15 +74,16 @@
   .title>button {
     width: 80px;
     height: 30px;
-    border-radius: 7px;
-    border: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
     outline: none;
     cursor: pointer;
-    background-color: #358fcb;
-    color: #fff;
+    background-color: #fff;
   }
   .title>button:hover {
-    background-color: #ef8614;
+    color: #409eff;
+    border-color: #c6e2ff;
+    background-color: #ecf5ff;
   }
   .argu {
     display: flex;
@@ -103,7 +104,7 @@
     height: 60px;
     padding-left: 10px;
     line-height: 60px;
-    background-color: #358fcb;
+    background-color: #409eff;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
@@ -120,7 +121,7 @@
     width: 26%;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
-    box-shadow: 3px 0 1px #358fcb inset;
+    box-shadow: 3px 0 1px #409eff inset;
     text-align: left;
   }
   .block-head {
@@ -193,7 +194,7 @@
     width: 44%;
   }
   .evi-parent1 {
-    line-height: 180px;
+    margin: auto 0;
   }
 </style>
 <script>
@@ -255,15 +256,6 @@
               }
             }
             this.evis = result
-            if (this.mode === 'null') {
-              let m = ''
-              let len = result.length
-              for (let i = 1; i < len; i++) {
-                m += i + '&'
-              }
-              m += len
-              this.mode = m
-            }
           })
           .catch((reject) => {
             console.log(reject)
@@ -294,6 +286,15 @@
           .then((response) => {
             // 响应成功回调
             this.subs = response.data
+            if (this.mode === null) {
+              let m = ''
+              let len = this.subs.length
+              for (let i = 1; i < len; i++) {
+                m += i + '&'
+              }
+              m += len
+              this.mode = m
+            }
           })
           .catch((reject) => {
             console.log(reject)
@@ -312,9 +313,9 @@
           }
           let obj = {
             dict: dict,
-            pass: item.eviBody.pass,
-            uncertain: item.eviBody.uncertain,
-            fail: item.eviBody.fail
+            pass: +item.eviBody.pass,
+            uncertain: +item.eviBody.uncertain,
+            fail: +item.eviBody.fail
           }
           tmp.push(obj)
         })
@@ -326,10 +327,19 @@
         this.$http.post('/server/users/argu/results', param)
           .then((response) => {
             // 响应成功回调
-            Message.success({
-              message: '完成论证',
-              duration: 1000
-            })
+            let data = response.data
+            if (data.code === 200) {
+              this.result = data.result
+              Message.success({
+                message: '完成论证',
+                duration: 1000
+              })
+            } else {
+              Message.error({
+                message: '论证失败',
+                duration: 1000
+              })
+            }
           })
           .catch((reject) => {
             console.log(reject)

@@ -81,15 +81,16 @@
   .title>button {
     width: 80px;
     height: 30px;
-    border-radius: 7px;
-    border: none;
+    border-radius: 4px;
+    border: 1px solid #dcdfe6;
     outline: none;
     cursor: pointer;
-    background-color: #358fcb;
-    color: #fff;
+    background-color: #fff;
   }
   .title>button:hover {
-    background-color: #ef8614;
+    color: #409eff;
+    border-color: #c6e2ff;
+    background-color: #ecf5ff;
   }
   .argu {
     display: flex;
@@ -110,7 +111,7 @@
     height: 60px;
     padding-left: 10px;
     line-height: 60px;
-    background-color: #358fcb;
+    background-color: #409eff;
     font-size: 16px;
     font-weight: bold;
     color: #fff;
@@ -127,7 +128,7 @@
     width: 26%;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.7);
-    box-shadow: 3px 0 1px #358fcb inset;
+    box-shadow: 3px 0 1px #409eff inset;
     text-align: left;
   }
   .block-head {

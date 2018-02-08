@@ -3,7 +3,6 @@
     <el-menu
       :default-active="$route.path"
       mode="horizontal"
-      @select="handleSelect"
       background-color="#409eff"
       text-color="#ccc"
       active-text-color="#fff"

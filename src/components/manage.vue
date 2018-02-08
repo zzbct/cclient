@@ -27,11 +27,11 @@
           <div class="state">{{ item.state}}</div>
           <div class="result">{{ item.result }}</div>
           <div class="operator">
-            <span class="opt1">
-              <router-link :to="{path: '/argu', query: {cId: item.ID}}">进入论证</router-link>
+            <span>
+              <router-link class="opt" :to="{path: '/argu', query: {cId: item.ID}}">进入论证</router-link>
             </span>
-            <span class="opt2" v-if="item.result!=='无'">
-              <router-link :to="{path: '/cost', query: {cId: item.ID}}">进入证据收集分析</router-link>
+            <span v-if="item.result!=='无'">
+              <router-link  class="opt" :to="{path: '/cost', query: {cId: item.ID}}">进入证据收集分析</router-link>
             </span>
           </div>
         </div>
@@ -40,6 +40,15 @@
   </div>
 </template>
 <style scoped>
+  a {
+    display: inline-block;
+    padding: 0 5px;
+    height: 30px;
+    line-height: 30px;
+    color: black;
+    border-radius: 4px;
+    text-decoration: none;
+  }
   .data-filter {
     display: flex;
     justify-content: space-between;
@@ -97,13 +106,9 @@
     font-size: 12px;
     color: #444350;
   }
-  .opt1:hover {
-    color: white;
-    background-color:#009DD9;
-  }
-  .opt2:hover {
-    color: white;
-    background-color: darkblue;
+  .opt:hover {
+    color: #fff;
+    background-color: #f56c6c;
   }
 </style>
 <script>
