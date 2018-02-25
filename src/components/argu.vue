@@ -69,7 +69,7 @@
     height: 60px;
     line-height: 60px;
     text-align: left;
-    font-size: 20px;
+    font-size: 16px;
   }
   .title>button {
     width: 80px;
@@ -111,6 +111,8 @@
   }
   .argu-goal-body {
     padding: 0 20px;
+    word-break: break-all;
+    font-size: 14px;
   }
   .info-tag {
     display: flex;
@@ -285,7 +287,19 @@
         })
           .then((response) => {
             // 响应成功回调
-            this.subs = response.data
+            let i = 0
+            let dict = null
+            this.subs = response.data.reduce((pre, cur) => {
+              return pre.concat(cur.EviItem.split(';').map((item) => {
+                if (cur.dict.indexOf('s') === -1) {
+                  i++
+                  dict = i
+                } else {
+                  dict = cur.dict
+                }
+                return {EviItem: item, dict: dict, eviID: cur.eviID}
+              }))
+            }, [])
             if (this.mode === null) {
               let m = ''
               let len = this.subs.length

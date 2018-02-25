@@ -59,6 +59,7 @@
   .data-view {
     margin: 0 auto;
     width: 90%;
+    font-size: 14px;
   }
   .view-head {
 

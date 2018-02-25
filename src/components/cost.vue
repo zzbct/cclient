@@ -76,7 +76,7 @@
     height: 60px;
     line-height: 60px;
     text-align: left;
-    font-size: 20px;
+    font-size: 16px;
   }
   .title>button {
     width: 80px;
