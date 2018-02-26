@@ -24,12 +24,12 @@
           <div class="threshold">
             <template v-if="item.writable">
               <input v-model="item.threshold">
-              <span @click="post(item,index)">完成</span>
-              <span @click="cancel(index)">取消</span>
+              <span @click="post(item,index)" class="icon-checkmark"></span>
+              <span @click="cancel(index)" class="icon-cross"></span>
             </template>
             <template v-else>
-              <input readonly v-model="item.threshold" >
-              <span @click="edit(index)">编辑</span>
+              <input class="locked" readonly v-model="item.threshold" >
+              <span @click="edit(index)" class="icon-pencil"></span>
             </template>
           </div>
         </div>
@@ -87,14 +87,15 @@
   }
   .threshold>input {
     width: 40%;
+    outline: none;
+    border: none;
   }
   .threshold>span {
     cursor: pointer;
     font-size: 12px;
-    color: #444350;
   }
-  .threshold>span:hover {
-    color: #ef8614;
+  .locked {
+    color: gray;
   }
 </style>
 <script>

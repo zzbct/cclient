@@ -18,16 +18,42 @@
         <div class="cost"><p>{{ item.cost }}</p></div>
         <div class="advice">
           <p v-for="unit in item.evi">
-            <span v-if="type==='base'">目标{{ unit.name }}{{unit.pos}}:{{ unit.initial[0] }}->{{ unit.conf[0] }}</span>
-            <span v-if="type==='sadd'">目标{{ unit.name }}:{{ unit.virtual }}->{{ unit.conf }}</span>
+            <template v-if="type==='base'">
+              <span @click="showInfo(unit.pos,unit.info)" class="infos">证据{{unit.pos}}:</span>
+              <span>{{ unit.initial[0] }}->{{ unit.conf[0] }}</span>
+            </template>
+            <template v-if="type==='sadd'">
+              <span>目标{{ unit.name }}:</span>
+              <span>{{ unit.virtual }}->{{ unit.conf }}</span>
+            </template>
           </p>
         </div>
       </div>
+    </div>
+    <div class="card" v-if="show">
+      <Card>
+        <div slot="header">
+          <span>{{header}}</span>
+          <Button @click='close' style="float: right; padding: 3px 0" type="text">
+            <span class="icon-cross"></span>
+          </Button>
+        </div>
+        <div class="text item">
+          <p>{{'类型:' + infos.type}}</p>
+          <p>{{'位置:' + infos.name + infos.chapter}}</p>
+          <p>{{'页码:' + infos.startPage + '-' + infos.endPage}}</p>
+          <p>{{'载体:' + infos.carrier}}</p>
+          <p>{{'证据来源:' + infos.eviSource}}</p>
+          <p>{{'证据收集者对该活动的熟知程度:' + infos.eviFamiliarity}}</p>
+          <p>{{'证据收集者对该证据支持能力的评估:' + infos.eviSuppAccess}}</p>
+        </div>
+      </Card>
     </div>
   </div>
 </template>
 <style scoped>
   .view {
+    position: relative;
     width: 400px;
     background-color: #ccc;
   }
@@ -72,8 +98,30 @@
     height: 30px;
     line-height: 30px;
   }
+  .infos {
+    font-weight: bolder;
+    color: rgb(64, 158, 255);
+    cursor: pointer;
+  }
+  .card {
+    position: absolute;
+    top: -20px;
+    right: -280px;
+    width: 280px;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1;
+  }
+  .item {
+    font-size: 12px;
+    text-align: left;
+    padding: 0;
+  }
+  item>p {
+    margin: 0;
+  }
 </style>
 <script>
+  import {Button, Card} from 'element-ui'
   export default{
     props: {
       type: {
@@ -87,11 +135,28 @@
     },
     data () {
       return {
+        infos: {},
+        show: false,
+        header: null
       }
     },
     components: {
+      Button,
+      Card
+    },
+    mounted () {
+      // this.close()
     },
     methods: {
+      showInfo (pos, infos) {
+        this.show = true
+        this.infos = infos
+        this.header = `证据${pos}`
+        console.log(0)
+      },
+      close () {
+        this.show = false
+      }
     }
   }
 </script>

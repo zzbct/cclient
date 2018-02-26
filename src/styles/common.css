@@ -12,3 +12,17 @@
 .scroll::-webkit-scrollbar-button {
   background-color: #fff;
 } /* 滑轨两头的监听按钮颜色 */
+.scroll-x::-webkit-scrollbar {
+  height: 2px;
+}
+.scroll-x::-webkit-scrollbar-track {
+  background-color: #fff;
+} /* 滚动条的滑轨背景颜色 */
+
+.scroll-x::-webkit-scrollbar-thumb {
+  background-color: #5e7a88;
+} /* 滑块颜色 */
+
+.scroll-x::-webkit-scrollbar-button {
+  background-color: #fff;
+} /* 滑轨两头的监听按钮颜色 */

@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import 'element-ui/lib/theme-chalk/index.css'
+import './styles/style.css'
 
 Vue.config.productionTip = false
 Vue.use(VueResource)

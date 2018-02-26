@@ -9,7 +9,7 @@
     </div>
     <div class="unit">
       <div class="title"><span class="circle c2">2</span>基本矩阵</div>
-      <div class="tag-p scroll" >
+      <div class="tag-p" >
         <div class="tag-c" v-for="item in matrixB">
           <TableTag :matrixData="item" type="base"></TableTag>
         </div>
@@ -17,7 +17,7 @@
     </div>
     <div class="unit">
       <div class="title"><span class="circle c3">3</span>拓展矩阵</div>
-      <div  class="tag-p scroll" >
+      <div  class="tag-p" >
         <div class="tag-c" v-for="item in matrixS">
           <TableTag :matrixData="item" type="sadd"></TableTag>
         </div>
@@ -68,13 +68,13 @@
     background-color: palevioletred;
   }
   .tag-p {
-    height: 220px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    overflow: auto;
   }
-
+  .tag-c {
+    margin-top: 10px;
+  }
 </style>
 <script>
   import TableTag from '@/components/BasicFrame/Matrix/TableTag'

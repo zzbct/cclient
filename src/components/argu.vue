@@ -14,7 +14,7 @@
             <div class="block-head">目标审定结果阈值</div>
             <div class="block-body">{{ goal.threshold }}</div>
           </div>
-          <div class="tag-block">
+          <div class="tag-block scroll-x">
             <div class="block-head">论证模式</div>
             <div class="block-body">
               <div>
@@ -125,6 +125,7 @@
     background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 3px 0 1px #409eff inset;
     text-align: left;
+    overflow: auto;
   }
   .block-head {
     position: relative;
