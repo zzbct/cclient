@@ -41,6 +41,7 @@
                 <p>位置：{{ item.eviBody.name }}-{{item.eviBody.chapter }}节</p>
                 <p>页码：{{ item.eviBody.startPage }}-{{ item.eviBody.endPage }}</p>
                 <p v-if="item.eviBody.details">细节说明：{{ item.eviBody.details }}</p>
+                <p>'载体:'{{ item.eviBody.carrier }}</p>
                 <p>证据来源：{{ item.eviBody.eviSource }}</p>
                 <p>证据收集者对该活动的熟知程度：{{ item.eviBody.eviFamiliarity }}</p>
                 <p>证据收集者对该证据支持能力的评估：{{ item.eviBody.eviSuppAccess }}</p>
@@ -163,8 +164,8 @@
   .evi-item {
     display: flex;
     justify-content: space-between;
-    min-height: 180px;
-    max-height: 210px;
+    min-height: 220px;
+    max-height: 250px;
     padding: 0 20px;
     font-size: 12px;
   }
@@ -197,7 +198,7 @@
     width: 44%;
   }
   .evi-parent1 {
-    margin: auto 0;
+    margin-top: 20px;
   }
 </style>
 <script>
@@ -301,15 +302,6 @@
                 return {EviItem: item, dict: dict, eviID: cur.eviID}
               }))
             }, [])
-            if (this.mode === null) {
-              let m = ''
-              let len = this.subs.length
-              for (let i = 1; i < len; i++) {
-                m += i + '&'
-              }
-              m += len
-              this.mode = m
-            }
           })
           .catch((reject) => {
             console.log(reject)

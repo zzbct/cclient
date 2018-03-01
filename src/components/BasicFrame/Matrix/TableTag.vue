@@ -152,7 +152,6 @@
         this.show = true
         this.infos = infos
         this.header = `证据${pos}`
-        console.log(0)
       },
       close () {
         this.show = false

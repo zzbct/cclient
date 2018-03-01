@@ -38,6 +38,7 @@
                 <p>位置：{{ item.info.chapter }}节</p>
                 <p>页码：{{ item.info.startPage }}-{{ item.info.endPage }}</p>
                 <p>细节说明：{{ item.info.details }}</p>
+                <p>'载体:'{{ item.info.carrier }}</p>
                 <p>证据来源：{{ item.info.eviSource  }} </p>
                 <p>证据收集者对该活动的熟知程度：{{ item.info.eviFamiliarity }}</p>
                 <p>证据收集者对该证据支持能力的评估：{{ item.info.eviSuppAccess }}</p>
@@ -167,8 +168,8 @@
   .evi-item {
     display: flex;
     justify-content: space-between;
-    min-height: 180px;
-    max-height: 210px;
+    min-height: 220px;
+    max-height: 250px;
     padding: 0 20px;
     font-size: 12px;
   }
