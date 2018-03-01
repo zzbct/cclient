@@ -59,7 +59,11 @@
       <div class="argu-goal scroll">
         <div class="argu-goal-head">子目标集</div>
         <div class="argu-goal-body">
+          <ElmInput placeholder="输入关键字进行过滤" v-model="filterText"></ElmInput>
+          <Tree :data="treeData" :filter-node-method="filterNode" ref="tree"></Tree>
+<!--
           <p v-for="(sub, index) in subs">{{sub.dict}}-{{sub.EviItem}}</p>
+-->
         </div>
       </div>
     </div>
@@ -111,7 +115,6 @@
     color: #fff;
   }
   .argu-goal-body {
-    padding: 0 20px;
     word-break: break-all;
     font-size: 14px;
   }
@@ -203,7 +206,7 @@
 </style>
 <script>
   import ENav from '@/components/BasicFrame/ENav'
-  import { Message } from 'element-ui'
+  import { Message, Tree, Input } from 'element-ui'
 
   export default{
     data () {
@@ -216,11 +219,24 @@
         },
         evis: null,
         mode: null,
-        result: null
+        result: null,
+        treeData: [],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
+        },
+        filterText: ''
+      }
+    },
+    watch: {
+      filterText (val) {
+        this.$refs.tree.filter(val)
       }
     },
     components: {
-      ENav
+      ENav,
+      Tree,
+      ElmInput: Input
     },
     created () {
       var cId = this.$route.query.cId
@@ -289,19 +305,9 @@
         })
           .then((response) => {
             // 响应成功回调
-            let i = 0
-            let dict = null
-            this.subs = response.data.reduce((pre, cur) => {
-              return pre.concat(cur.EviItem.split(';').map((item) => {
-                if (cur.dict.indexOf('s') === -1) {
-                  i++
-                  dict = i
-                } else {
-                  dict = cur.dict
-                }
-                return {EviItem: item, dict: dict, eviID: cur.eviID}
-              }))
-            }, [])
+            let data = response.data
+            this.treeData.push(data.tree)
+            this.subs = data.subs
           })
           .catch((reject) => {
             console.log(reject)
@@ -351,6 +357,10 @@
           .catch((reject) => {
             console.log(reject)
           })
+      },
+      filterNode (value, data) {
+        if (!value) return true
+        return data.label.indexOf(value) !== -1
       }
     }
   }

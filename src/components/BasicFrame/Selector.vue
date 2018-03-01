@@ -35,7 +35,7 @@
   .select-view {
     width: 100%;
     margin-bottom: 6px;
-    color: #acacb0;
+    color: #409eff;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
