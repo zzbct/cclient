@@ -36,7 +36,7 @@
 }
 .icon-cross:before {
   content: "\ea0f";
-  color: red;
+  color: rgb(64, 158, 255);
 }
 .icon-checkmark:before {
   content: "\ea10";

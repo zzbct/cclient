@@ -67,6 +67,17 @@
         </div>
       </div>
     </div>
+    <div class="card" v-if="show">
+      <Card>
+        <div slot="header">
+          <span class="header-text">待提供证据的目标</span>
+          <span @click='close' class="header-icon icon-cross"></span>
+        </div>
+        <div class="text item">
+          <p v-for="item in empty">{{ item }}</p>
+        </div>
+      </Card>
+    </div>
   </div>
 </template>
 <style scoped>
@@ -203,10 +214,35 @@
   .evi-parent1 {
     margin-top: 20px;
   }
+  .card {
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    width: 300px;
+    margin-left: -150px;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 1;
+  }
+  .header-text {
+    font-weight: bolder;
+  }
+  .header-icon {
+    float: right;
+    padding: 3px 0;
+    cursor: pointer;
+  }
+  .item {
+    font-size: 12px;
+    text-align: left;
+    padding: 0;
+  }
+  item>p {
+    margin: 0;
+  }
 </style>
 <script>
   import ENav from '@/components/BasicFrame/ENav'
-  import { Message, Tree, Input } from 'element-ui'
+  import { Message, Tree, Input, Card } from 'element-ui'
   import Common from '@/js/common.js'
 
   export default{
@@ -226,7 +262,9 @@
           children: 'children',
           label: 'label'
         },
-        filterText: ''
+        filterText: '',
+        empty: [],
+        show: false
       }
     },
     watch: {
@@ -237,6 +275,7 @@
     components: {
       ENav,
       Tree,
+      Card,
       ElmInput: Input
     },
     created () {
@@ -316,7 +355,7 @@
       },
       argu () {
         var tmp = []
-        var empty = []
+        this.empty = []
         this.evis.forEach((item) => {
           let pos = Common.AliveInObj(this.subs, 'EviItem', item.eviItem)
           let obj = {
@@ -327,10 +366,9 @@
           }
           tmp.push(obj)
         })
-        console.log(this.treeData[0])
-        empty = Common.deepIntergrity(this.treeData[0], tmp)
-        if (empty.length) {
-          alert(empty.join(';'))
+        this.empty = Common.filterItem(Common.deepIntergrity(this.treeData[0], tmp))
+        if (this.empty.length) {
+          this.show = true
         } else {
           var param = {
             mode: this.mode,
@@ -362,6 +400,9 @@
       filterNode (value, data) {
         if (!value) return true
         return data.label.indexOf(value) !== -1
+      },
+      close () {
+        this.show = false
       }
     }
   }

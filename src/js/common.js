@@ -6,7 +6,8 @@ const deepIntergrity = function (obj, evi) {
   if (flag === 1) { // &
     for (let i = 0; i < len; i++) {
       if (arr[i].indexOf('s') === -1) {
-        if (AliveInObj(evi, 'dict', arr[i]) === -1) {
+        let pos = AliveInObj(evi, 'dict', arr[i])
+        if (pos === -1) {
           empty.push(arr[i])
         }
       } else {
@@ -37,6 +38,27 @@ const deepIntergrity = function (obj, evi) {
     }
   }
   return empty
+}
+
+const filterItem = function (arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let unit = arr[i]
+    if (unit.indexOf('or') !== -1) {
+      let s = unit.split('or')
+      s.forEach((item, idx) => {
+        let pos = arr.indexOf(item)
+        while (pos !== -1) {
+          if (arr[pos].indexOf('or') !== -1) {
+            pos = arr.indexOf(item, pos)
+          } else {
+            arr.splice(i, 1)
+            break
+          }
+        }
+      })
+    }
+  }
+  return arr
 }
 
 function SplitMode (str) {
@@ -70,4 +92,5 @@ function AliveInObj (array, key, val, part = false) {
   }
   return -1
 }
-export default {deepIntergrity, AliveInObj}
+
+export default {deepIntergrity, AliveInObj, filterItem}
