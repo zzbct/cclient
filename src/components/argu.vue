@@ -207,6 +207,7 @@
 <script>
   import ENav from '@/components/BasicFrame/ENav'
   import { Message, Tree, Input } from 'element-ui'
+  import Common from '@/js/common.js'
 
   export default{
     data () {
@@ -315,48 +316,48 @@
       },
       argu () {
         var tmp = []
+        var empty = []
         this.evis.forEach((item) => {
-          let dict
-          for (var i = 0; i < this.subs.length; i++) {
-            let unit = this.subs[i]
-            if (unit.eviID === item.eviID) {
-              dict = i + 1
-              break
-            }
-          }
+          let pos = Common.AliveInObj(this.subs, 'EviItem', item.eviItem)
           let obj = {
-            dict: dict,
+            dict: pos === -1 ? item.dict : this.subs[pos].dict,
             pass: +item.eviBody.pass,
             uncertain: +item.eviBody.uncertain,
             fail: +item.eviBody.fail
           }
           tmp.push(obj)
         })
-        var param = {
-          mode: this.mode,
-          refItem: this.$route.query.cId,
-          confidenceInfo: tmp
+        console.log(this.treeData[0])
+        empty = Common.deepIntergrity(this.treeData[0], tmp)
+        if (empty.length) {
+          alert(empty.join(';'))
+        } else {
+          var param = {
+            mode: this.mode,
+            refItem: this.$route.query.cId,
+            confidenceInfo: tmp
+          }
+          this.$http.post('/server/users/argu/results', param)
+            .then((response) => {
+              // 响应成功回调
+              let data = response.data
+              if (data.code === 200) {
+                this.result = data.result
+                Message.success({
+                  message: '完成论证',
+                  duration: 1000
+                })
+              } else {
+                Message.error({
+                  message: '论证失败',
+                  duration: 1000
+                })
+              }
+            })
+            .catch((reject) => {
+              console.log(reject)
+            })
         }
-        this.$http.post('/server/users/argu/results', param)
-          .then((response) => {
-            // 响应成功回调
-            let data = response.data
-            if (data.code === 200) {
-              this.result = data.result
-              Message.success({
-                message: '完成论证',
-                duration: 1000
-              })
-            } else {
-              Message.error({
-                message: '论证失败',
-                duration: 1000
-              })
-            }
-          })
-          .catch((reject) => {
-            console.log(reject)
-          })
       },
       filterNode (value, data) {
         if (!value) return true

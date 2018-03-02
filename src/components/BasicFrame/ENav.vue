@@ -9,7 +9,7 @@
       router>
       <el-menu-item class="item-customer it1" index="/data">数据准备</el-menu-item>
       <el-menu-item class="item-customer" index="/manage">目标管理</el-menu-item>
-      <span @click="powerOn" class="icon-switch switch-common"></span>
+      <span @click="powerOn" class="icon-switch switch-common" title="注销"></span>
     </el-menu>
   </div>
 </template>
