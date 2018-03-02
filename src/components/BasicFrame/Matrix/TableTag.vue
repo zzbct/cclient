@@ -34,9 +34,9 @@
       <Card>
         <div slot="header">
           <span>{{header}}</span>
-          <Button @click='close' style="float: right; padding: 3px 0" type="text">
+          <ElmButton @click='close' style="float: right; padding: 3px 0" type="text">
             <span class="icon-cross"></span>
-          </Button>
+          </ElmButton>
         </div>
         <div class="text item">
           <p>{{'类型:' + infos.type}}</p>
@@ -141,7 +141,7 @@
       }
     },
     components: {
-      Button,
+      ElmButton: Button,
       Card
     },
     mounted () {

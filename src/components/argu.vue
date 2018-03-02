@@ -5,6 +5,7 @@
     <div class="title">>
       目标论证页--{{ goal.CheckItem }}
       <button @click="argu">执行论证</button>
+      <button @click="addEvi">新增证据</button>
     </div>
     <div class="argu">
       <div class="argu-info">
@@ -27,7 +28,7 @@
             <div class="block-body">{{ result }}</div>
           </div>
         </div>
-        <!--证据相关信息-->
+        <!--原有证据相关信息-->
         <div class="evi">
           <div class="evi-head">
             <div class="evi-discribe">证据描述</div>
@@ -36,7 +37,7 @@
           </div>
           <div class="evi-body scroll">
             <div class="evi-item" v-for="item in evis">
-              <div class="evi-discribe">
+              <div v-if="item.type === 'old'" class="evi-discribe">
                 <p>类型：{{ item.eviBody.type }}</p>
                 <p>位置：{{ item.eviBody.name }}-{{item.eviBody.chapter }}节</p>
                 <p>页码：{{ item.eviBody.startPage }}-{{ item.eviBody.endPage }}</p>
@@ -46,10 +47,13 @@
                 <p>证据收集者对该活动的熟知程度：{{ item.eviBody.eviFamiliarity }}</p>
                 <p>证据收集者对该证据支持能力的评估：{{ item.eviBody.eviSuppAccess }}</p>
               </div>
+              <div v-if="item.type === 'new'" class="evi-discribe">
+                <p>{{ item.text }}</p>
+              </div>
               <div class="evi-confidence">
-                <p><span class="evi-confidence-1">满足{{ item.eviBody.pass }}</span></p>
-                <p><span class="evi-confidence-2">不满足{{ item.eviBody.fail }}</span></p>
-                <p><span class="evi-confidence-3">不确定{{ item.eviBody.uncertain }}</span></p>
+                <p><span class="evi-confidence-1">通过{{ item.pass }}</span></p>
+                <p><span class="evi-confidence-2">不通过{{ item.fail }}</span></p>
+                <p><span class="evi-confidence-3">不确定{{ item.uncertain }}</span></p>
               </div>
               <div class="evi-parent evi-parent1">{{ item.eviItem }}</div>
             </div>
@@ -77,6 +81,10 @@
           <p v-for="item in empty">{{ item }}</p>
         </div>
       </Card>
+    </div>
+    <!--新增证据测试弹窗-->
+    <div class="creates" v-if="creates">
+      <CreatesEvi @pushEvi="pushEvi" @cancelPush="cancelPush" :datas = "subs"></CreatesEvi>
     </div>
   </div>
 </template>
@@ -160,7 +168,7 @@
   .block-body {
     margin-top: 20px;
   }
-  .evi {
+  .evi1 {
     background-color: #fff;
   }
   .evi-head {
@@ -233,12 +241,22 @@
     text-align: left;
     padding: 0;
   }
-  item>p {
+  .item>p {
     margin: 0;
+  }
+  .creates {
+    position: fixed;
+    top: 120px;
+    left: 50px;
+    width: 60%;
+    height: 600px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.6);
   }
 </style>
 <script>
   import ENav from '@/components/BasicFrame/ENav'
+  import CreatesEvi from '@/components/BasicFrame/CreatesEvi'
   import { Message, Tree, Input, Card } from 'element-ui'
   import Common from '@/js/common.js'
 
@@ -261,7 +279,8 @@
         },
         filterText: '',
         empty: [],
-        show: false
+        show: false,
+        creates: false
       }
     },
     watch: {
@@ -271,6 +290,7 @@
     },
     components: {
       ENav,
+      CreatesEvi,
       Tree,
       Card,
       ElmInput: Input
@@ -303,7 +323,8 @@
                 var obj = {
                   eviID: item.eviID,
                   eviItem: item.eviItem,
-                  eviBody: item.evilist
+                  eviBody: item.evilist,
+                  type: 'old'
                 }
                 result.push(obj)
               })
@@ -341,6 +362,7 @@
             let data = response.data
             this.treeData.push(data.tree)
             this.subs = data.subs
+            console.log(this.subs)
           })
           .catch((reject) => {
             console.log(reject)
@@ -397,6 +419,17 @@
       },
       close () {
         this.show = false
+      },
+      addEvi () {
+        this.creates = true
+      },
+      pushEvi (data) {
+        console.log(data)
+        this.evis = this.evis.concat(data)
+        this.creates = false
+      },
+      cancelPush () {
+        this.creates = false
       }
     }
   }

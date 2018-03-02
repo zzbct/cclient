@@ -6,6 +6,7 @@
       证据收集分析页--{{ static.heckItem }}
       <button @click="analyse">执行分析</button>
       <button v-if="advice.length" @click="reviewer">回审数据</button>
+      <button v-if="advice.length" @click="additional">“补充证据”建议</button>
     </div>
     <div class="argu">
       <div class="argu-goal scroll">
@@ -44,13 +45,13 @@
                 <p>证据收集者对该证据支持能力的评估：{{ item.info.eviSuppAccess }}</p>
               </div>
               <div class="evi-confidence">
-                <p><span class="evi-confidence-1">满足{{ item.initial[0] }}</span></p>
-                <p><span class="evi-confidence-2">不满足{{ item.initial[1] }}</span></p>
+                <p><span class="evi-confidence-1">通过{{ item.initial[0] }}</span></p>
+                <p><span class="evi-confidence-2">不通过{{ item.initial[1] }}</span></p>
                 <p><span class="evi-confidence-3">不确定{{ item.initial[2] }}</span></p>
               </div>
               <div class="evi-confidence">
-                <p><span class="evi-confidence-1">满足{{ item.conf[0] }}</span></p>
-                <p><span class="evi-confidence-2">不满足{{ item.conf[1] }}</span></p>
+                <p><span class="evi-confidence-1">通过{{ item.conf[0] }}</span></p>
+                <p><span class="evi-confidence-2">不通过{{ item.conf[1] }}</span></p>
                 <p><span class="evi-confidence-3">不确定{{ item.conf[2] }}</span></p>
               </div>
               <div class="evi-math">
@@ -65,8 +66,8 @@
       </div>
     </div>
     <!--弹窗-->
-    <div class="window" id="wd" v-if="show">
-      <div class="box" id="bx">
+    <div class="window" id="wd" v-if="show1||show2">
+      <div class="box" id="bx" v-if="show1">
         <Matrix :first="first" :matrixB="matrixB" :matrixS="matrixS" ></Matrix>
       </div>
     </div>
@@ -80,8 +81,9 @@
     font-size: 16px;
   }
   .title>button {
-    width: 80px;
     height: 30px;
+    padding: 0 10px;
+    margin: 0 5px;
     border-radius: 4px;
     border: 1px solid #dcdfe6;
     outline: none;
@@ -238,7 +240,8 @@
         matrixB: [],
         matrixS: [],
         cost: null,
-        show: false
+        show1: false,
+        show2: false
       }
     },
     components: {
@@ -296,7 +299,10 @@
           })
       },
       reviewer () {
-        this.show = !this.show
+        this.show1 = !this.show1
+      },
+      additional () {
+        this.show2 = !this.show2
       },
       close () {
         let $this = this
@@ -304,8 +310,9 @@
         parent.addEventListener('click', function (e) {
           e = e || window.event
           let target = e.target || e.srcElement
-          if (target.className === 'window' && $this.show) {
-            $this.show = false
+          if (target.className === 'window' && ($this.show1 || $this.show2)) {
+            $this.show1 = false
+            $this.show2 = false
           }
           e.stopPropagation()
         }, false)
