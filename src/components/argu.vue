@@ -70,7 +70,7 @@
     <div class="card" v-if="show">
       <Card>
         <div slot="header">
-          <span class="header-text">待提供证据的目标</span>
+          <span class="header-text">请为以下目标提供必要证据：</span>
           <span @click='close' class="header-icon icon-cross"></span>
         </div>
         <div class="text item">
@@ -223,9 +223,6 @@
     background-color: rgba(0,0,0,0.6);
     z-index: 1;
   }
-  .header-text {
-    font-weight: bolder;
-  }
   .header-icon {
     float: right;
     padding: 3px 0;
@@ -310,10 +307,6 @@
                 }
                 result.push(obj)
               })
-            } else {
-              if (confirm('请先为该目标提供支撑证据！')) {
-                this.$router.push({ path: '/manage' })
-              }
             }
             this.evis = result
           })
@@ -369,6 +362,7 @@
         this.empty = Common.filterItem(Common.deepIntergrity(this.treeData[0], tmp))
         if (this.empty.length) {
           this.show = true
+          this.result = 0
         } else {
           var param = {
             mode: this.mode,
