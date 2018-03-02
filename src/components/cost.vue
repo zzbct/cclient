@@ -70,6 +70,11 @@
       <div class="box" id="bx" v-if="show1">
         <Matrix :first="first" :matrixB="matrixB" :matrixS="matrixS" ></Matrix>
       </div>
+      <div v-if="show2">
+        <div class="chart">
+          <ELine></ELine>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -208,20 +213,21 @@
   }
   .window {
     position: fixed;
-    top: 80px;
+    top: 68px;
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.6);
   }
   .box {
     width: 80%;
-    margin: 50px auto 0;
+    margin: 20px auto 0;
     background-color: white;
   }
 </style>
 <script>
   import ENav from '@/components/BasicFrame/ENav'
   import Matrix from '@/components/BasicFrame/Matrix/matrix'
+  import ELine from '@/components/BasicFrame/ELine'
 
   export default{
     data () {
@@ -246,7 +252,8 @@
     },
     components: {
       ENav,
-      Matrix
+      Matrix,
+      ELine
     },
     created () {
       this.cId = this.$route.query.cId
@@ -302,6 +309,8 @@
         this.show1 = !this.show1
       },
       additional () {
+        // 获取证据绝对成本
+
         this.show2 = !this.show2
       },
       close () {

@@ -77,7 +77,7 @@
           <span class="header-text">请为以下目标提供必要证据：</span>
           <span @click='close' class="header-icon icon-cross"></span>
         </div>
-        <div class="text item">
+        <div class="item">
           <p v-for="item in empty">{{ item }}</p>
         </div>
       </Card>
@@ -228,6 +228,7 @@
     left: 50%;
     width: 300px;
     margin-left: -150px;
+    border: 1px solid #ccc;
     background-color: rgba(0,0,0,0.6);
     z-index: 1;
   }
@@ -239,10 +240,9 @@
   .item {
     font-size: 12px;
     text-align: left;
-    padding: 0;
   }
   .item>p {
-    margin: 0;
+    margin: 10px 0;
   }
   .creates {
     position: fixed;
