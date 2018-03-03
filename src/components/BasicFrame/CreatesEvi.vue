@@ -37,7 +37,9 @@
 
             </div>
           </div>
-          <div class="btn operate"><span @click="del(index)">-删除证据</span></div>
+          <div class="btn operate">
+            <span @click="del(index)" class="icon-bin2" title="删除证据"></span>
+          </div>
         </div>
       </div>
       <div class="btn add">

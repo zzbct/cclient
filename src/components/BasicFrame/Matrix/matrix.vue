@@ -5,8 +5,8 @@
       <div class="title">
         <span class="circle c1">1</span>
         <span>提升建议</span>
-        <span v-if="chart" @click="slider">图</span>
-        <span v-if="!chart" @click="slider">表</span>
+        <span class="icon icon-stats-dots" v-if="chart" @click="slider"></span>
+        <span class="icon icon-table2" v-if="!chart" @click="slider"></span>
       </div>
       <div class="piece">
         <span v-for="item in first">目标{{ item.name }} : {{ item.virtual }}->{{ item.conf }}</span>
@@ -19,7 +19,7 @@
       </div>
       <div class="tag-p scroll" >
         <div class="tag-c" v-for="(item, index) in matrixB">
-          <ELine v-if="chart" :pos="index" :datas="item"></ELine>
+          <ELine v-if="chart" :pos="index" :datas="item" :title="item.dict" color="rgb(219, 112, 147)"></ELine>
           <TableTag v-if="!chart" :matrixData="item" type="base"></TableTag>
         </div>
       </div>
@@ -31,7 +31,7 @@
       </div>
       <div  class="tag-p scroll" >
         <div class="tag-c" v-for="(item,index) in matrixS">
-          <ELine v-if="chart" :pos="index" :external="matrixB" :datas="item"></ELine>
+          <ELine v-if="chart" :pos="index" :external="matrixB" :datas="item" :title="item.EviItem" color="#f7c106"></ELine>
           <TableTag  v-if="!chart" :matrixData="item" type="sadd"></TableTag>
         </div>
       </div>
@@ -89,6 +89,10 @@
   }
   .tag-c {
     margin-top: 10px;
+  }
+  .icon {
+    color: rgb(64, 158, 255);
+    cursor: pointer;
   }
 </style>
 <script>

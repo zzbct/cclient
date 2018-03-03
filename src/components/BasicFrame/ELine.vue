@@ -43,6 +43,14 @@
         default: function () {
           return {}
         }
+      },
+      title: {
+        type: String,
+        default: ''
+      },
+      color: {
+        type: String,
+        default: '#333'
       }
     },
     components: {
@@ -66,11 +74,16 @@
     methods: {
       drawLine () {
         // 基于准备好的dom，初始化echarts实例
+        let $this = this
         let myChart = echarts.init(document.getElementsByClassName('chart')[`${this.idx}`])
         // 绘制图表
         myChart.setOption({
           title: {
-            text: '证据绝对成本分布趋势图'
+            text: `目标${$this.title}`,
+            left: 'center',
+            textStyle: {
+              fontSize: 14
+            }
           },
           tooltip: {
             trigger: 'axis'
@@ -81,7 +94,8 @@
           grid: {
             left: '3%',
             right: '4%',
-            bottom: '3%',
+            bottom: '12%',
+            top: 30,
             containLabel: true
           },
           toolbox: {
@@ -92,7 +106,7 @@
           xAxis: {
             type: 'category',
             boundaryGap: false,
-            data: this.xData
+            data: $this.xData
           },
           yAxis: {
             type: 'value'
@@ -102,7 +116,15 @@
               name: '成本',
               type: 'line',
               smooth: true,
-              data: this.yData
+              itemStyle: {
+                normal: {
+                  color: 'rgb(107, 142, 35)',
+                  lineStyle: {
+                    color: $this.color
+                  }
+                }
+              },
+              data: $this.yData
             }
           ]
         })

@@ -61,7 +61,10 @@
         </div>
       </div>
       <div class="argu-goal scroll">
-        <div class="argu-goal-head">子目标集</div>
+        <div class="argu-goal-head">
+          <span class="icon-tree"></span>
+          <span>子目标集</span>
+        </div>
         <div class="argu-goal-body">
           <ElmInput placeholder="输入关键字进行过滤" v-model="filterText"></ElmInput>
           <Tree :data="treeData" :filter-node-method="filterNode" ref="tree"></Tree>
