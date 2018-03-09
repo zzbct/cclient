@@ -131,7 +131,8 @@
           params: {
             stage: this.stage,
             character: this.character,
-            threshold: this.threshold
+            threshold: this.threshold,
+            userID: localStorage.getItem('ID')
           }
         })
           .then((response) => {

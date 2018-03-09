@@ -145,7 +145,8 @@
             stage: this.stage,
             character: this.character,
             state: this.state,
-            result: this.result
+            result: this.result,
+            userID: localStorage.getItem('ID')
           }
         })
           .then((response) => {

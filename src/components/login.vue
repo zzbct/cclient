@@ -19,7 +19,7 @@
     right: 0;
     width: 30%;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: lightgray;
   }
   .login-area {
     position: absolute;

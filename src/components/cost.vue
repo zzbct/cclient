@@ -285,6 +285,13 @@
           })
       },
       analyse (cId, id, auth) {
+        if (this.static.total === 0) {
+          Message.error({
+            message: '请先提供证据',
+            duration: 1000
+          })
+          return
+        }
         this.$http.get('/server/users/cost/analyse', {
           params: {
             cId: this.cId,

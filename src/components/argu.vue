@@ -345,7 +345,8 @@
       goalInfo (cId) {
         this.$http.get('/server/users/argu/goal', {
           params: {
-            id: cId
+            id: cId,
+            userID: localStorage.getItem('ID')
           }
         })
           .then((response) => {
@@ -396,7 +397,8 @@
           var param = {
             mode: this.mode,
             refItem: this.$route.query.cId,
-            confidenceInfo: tmp
+            confidenceInfo: tmp,
+            userID: localStorage.getItem('ID')
           }
           this.$http.post('/server/users/argu/results', param)
             .then((response) => {
