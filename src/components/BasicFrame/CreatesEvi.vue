@@ -123,7 +123,7 @@
   }
 </style>
 <script>
-  import {Select, Option, Input, Steps, Step, Button} from 'element-ui'
+  import {Select, Option, Input, Steps, Step, Button, Message} from 'element-ui'
   export default{
     data () {
       return {
@@ -159,12 +159,20 @@
     },
     methods: {
       add () {
-        this.evis.push({text: '', pass: 1, fail: 0, uncertain: 0, eviItem: ''})
+        this.evis.push({text: '', pass: 1, fail: 0, uncertain: 0, goal: ''})
       },
       del (idx) {
         this.evis.splice(idx, 1)
       },
       pushs () {
+        let msg = this.checkFormat(this.evis)
+        if (msg.length) {
+          Message.info({
+            message: msg,
+            duration: 4000
+          })
+          return
+        }
         let data = []
         this.evis.forEach(item => {
           let s = item.goal.split(':')
@@ -184,7 +192,45 @@
         this.$emit('pushEvi', data)
       },
       cancels () {
+        this.evis = []
         this.$emit('cancelPush')
+      },
+      checkFormat (data) {
+        let msg = ''
+        data.forEach((item, idx) => {
+          if (this.isEmpty(item.goal) || this.isEmpty(item.text) || this.isEmpty(item.pass) || this.isEmpty(item.fail) || this.isEmpty(item.uncertain)) {
+            msg += `第${idx + 1}条证据:存在空数据;`
+          }
+          msg += this.isLegal(item.pass, item.fail, item.uncertain)
+        })
+        return msg
+      },
+      isEmpty (data) {
+        return data.length === 0
+      },
+      isLegal (a, b, c) {
+        let msg = ''
+        let tmp = ''
+        a = +a
+        b = +b
+        c = +c
+        console.log(a, b, c)
+        if (a + b + c > 1) {
+          msg += '证据置信度相加和大于1'
+        } else if (a + b + c < 1) {
+          msg += '证据置信度相加和小于1'
+        }
+        if (a < 0 && a > 1) {
+          tmp += 'pass值'
+        } else if (b < 0 && b > 1) {
+          tmp += 'fail值'
+        } else if (c < 0 || c > 1) {
+          tmp += 'uncertain值'
+        }
+        if (tmp.length) {
+          msg += ' , ' + tmp + '不不符合要求'
+        }
+        return msg
       }
     }
   }

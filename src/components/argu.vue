@@ -51,9 +51,9 @@
                 <p>{{ item.text }}</p>
               </div>
               <div class="evi-confidence">
-                <p><span class="evi-confidence-1">通过{{ item.pass }}</span></p>
-                <p><span class="evi-confidence-2">不通过{{ item.fail }}</span></p>
-                <p><span class="evi-confidence-3">不确定{{ item.uncertain }}</span></p>
+                <p><span class="evi-confidence-1">通过{{ item.eviBody.pass }}</span></p>
+                <p><span class="evi-confidence-2">不通过{{ item.eviBody.fail }}</span></p>
+                <p><span class="evi-confidence-3">不确定{{ item.eviBody.uncertain }}</span></p>
               </div>
               <div class="evi-parent evi-parent1">{{ item.eviItem }}</div>
             </div>
@@ -67,7 +67,7 @@
         </div>
         <div class="argu-goal-body">
           <ElmInput placeholder="输入关键字进行过滤" v-model="filterText"></ElmInput>
-          <Tree :data="treeData" :filter-node-method="filterNode" ref="tree"></Tree>
+          <Tree class="mytree" :data="treeData" :filter-node-method="filterNode" ref="tree"></Tree>
 <!--
           <p v-for="(sub, index) in subs">{{sub.dict}}-{{sub.EviItem}}</p>
 -->
@@ -122,8 +122,8 @@
     width: 58%;
   }
   .argu-goal {
-    width: 400px;
-    max-height: 700px;
+    min-width: 400px;
+    max-height: 450px;
     overflow: scroll;
     background-color: #fff;
   }
@@ -183,7 +183,7 @@
     box-shadow: 0 3px 1px #888;
   }
   .evi-body {
-    max-height: 700px;
+    max-height: 450px;
     overflow: auto;
   }
   .evi-item {
@@ -255,6 +255,10 @@
     height: 600px;
     padding: 20px;
     background-color: rgba(0,0,0,0.6);
+  }
+  .mytree {
+    word-break: break-all;
+    word-wrap:break-word;
   }
 </style>
 <script>
@@ -427,7 +431,11 @@
         this.creates = true
       },
       pushEvi (data) {
-        console.log(data)
+        let msg = 'ok'
+        Message.success({
+          message: msg,
+          duration: 1000
+        })
         this.evis = this.evis.concat(data)
         this.creates = false
       },

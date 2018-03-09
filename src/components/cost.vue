@@ -6,7 +6,9 @@
       证据收集分析页--{{ static.heckItem }}
       <button @click="analyse">执行分析</button>
       <button v-if="advice.length" @click="reviewer">回审数据</button>
+<!--
       <button v-if="advice.length" @click="additional">“补充证据”建议</button>
+-->
     </div>
     <div class="argu">
       <div class="argu-goal scroll">
@@ -228,6 +230,7 @@
   import ENav from '@/components/BasicFrame/ENav'
   import Matrix from '@/components/BasicFrame/Matrix/matrix'
   import ELine from '@/components/BasicFrame/ELine'
+  import { Message } from 'element-ui'
 
   export default{
     data () {
@@ -299,6 +302,15 @@
               this.advice = data.dataTree.res
               this.matrixB = data.dataTree.matrixB
               this.matrixS = data.dataTree.matrixS
+              Message.success({
+                message: '完成分析',
+                duration: 1000
+              })
+            } else {
+              Message.error({
+                message: '执行分析失败',
+                duration: 1000
+              })
             }
           })
           .catch((reject) => {
