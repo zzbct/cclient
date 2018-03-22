@@ -92,5 +92,21 @@ function AliveInObj (array, key, val, part = false) {
   }
   return -1
 }
-
-export default {deepIntergrity, AliveInObj, filterItem}
+function FillData (arr, evi) {
+  let tmp = []
+  arr.forEach((item) => {
+    let pos = AliveInObj(evi, 'eviItem', item.EviItem)
+    if (item.dict.indexOf('s') === -1) {
+      if (pos === -1) {
+        tmp.push({
+          dict: item.dict,
+          pass: 0,
+          uncertain: 0,
+          fail: 1
+        })
+      }
+    }
+  })
+  return tmp
+}
+export default {deepIntergrity, AliveInObj, filterItem, FillData}

@@ -292,6 +292,13 @@
           })
           return
         }
+        if (this.static.result > this.static.threshold) {
+          Message.info({
+            message: '无需进行分析',
+            duration: 1000
+          })
+          return
+        }
         this.$http.get('/server/users/cost/analyse', {
           params: {
             cId: this.cId,
@@ -304,7 +311,7 @@
             // this.static = response.data
             let data = response.data
             if (data.code === 200) {
-              this.cost = data.cost
+              this.cost = data.cost.toFixed(2)
               this.first = data.dataTree.first.evi
               this.advice = data.dataTree.res
               this.matrixB = data.dataTree.matrixB

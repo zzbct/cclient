@@ -176,7 +176,7 @@
       top: 70%;
     }
     100% {
-      left: 1100px;
+      left: 1200px;
       top: 2%;
       transform: rotate(-15deg) scale(0.7);
     }

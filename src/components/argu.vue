@@ -379,6 +379,7 @@
       argu () {
         var tmp = []
         this.empty = []
+        console.log(this.subs)
         this.evis.forEach((item) => {
           let pos = Common.AliveInObj(this.subs, 'EviItem', item.eviItem)
           let obj = {
